@@ -21,7 +21,7 @@ Running environment.
 > The python version is 3.6
 #### 2. UnityEnvironment
 >```text
->pip3 install UnityEnvironment
+>pip install mlagents==0.4
 >```
 #### 3. GPU-Environment:
 > 

@@ -1,19 +1,19 @@
 # coding:utf-8
-from mlagents.envs import UnityEnvironment
+from unityagents import UnityEnvironment
 import numpy as np
 from network.DQN import DQNAgent
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import time
 
-env = UnityEnvironment(file_name="../environment/hallway/hallway.exe")
+env = UnityEnvironment(file_name="../environment/Banana_Windows_x86_64_0.4/Banana.exe")
 path = "../result/banana/"
 # get the default brain
 brain_name = env.brain_names[0]
 brain = env.brains[brain_name]
 
-env_info = env.reset(train_mode=False)[brain_name]
-action_size = brain.vector_action_space_size[0]
+env_info = env.reset(train_mode=True)[brain_name]
+action_size = brain.vector_action_space_size
 state = env_info.vector_observations[0]
 state_size = len(state)
 
@@ -24,7 +24,7 @@ mean = 0
 count = 0
 eps = 1.0
 eps_end = 0.01
-decay = 0.599
+decay = 0.999
 max_t = 1000
 gamma = 0.99
 alpha = 1e-4
