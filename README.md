@@ -63,3 +63,5 @@ Running environment.
 #### 주의사황
 > 신경망을 작성할떄 리스트형식은 입력이 안되므로 state size와 action size를 대입할때 주의하자
 
+> 정확한 이유를 모르겠지만 cmd에서 git clone하면 환경이 실행하는 오류가 발생하는데 만약 코드를 실행시켰는데 "The Unity environment took too long to respond" 오류가 뜨면 zip 파일로 다운받아서 사용하시면 작동됩니다.
+

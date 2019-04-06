@@ -6,17 +6,17 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import time
 
-env = UnityEnvironment(file_name="../environment/Banana_Windows_x86_64_0.4/Banana.exe")
-path = "../result/banana/"
+env = UnityEnvironment(file_name="../environment/Banana_Windows_x86_64_0.4/Banana.exe") #* 환경 불러오기 
+path = "../result/banana/" # 결과 저장할 주소
 # get the default brain
-brain_name = env.brain_names[0]
-brain = env.brains[brain_name]
+brain_name = env.brain_names[0] #* brain_name 불러오기
+brain = env.brains[brain_name] #* brain 불러오기
 
-env_info = env.reset(train_mode=True)[brain_name]
-action_size = brain.vector_action_space_size
-state = env_info.vector_observations[0]
-state_size = len(state)
-
+env_info = env.reset(train_mode=True)[brain_name] #* env reset으로 env_info 불러오기
+action_size = brain.vector_action_space_size #* action size 불러오기
+state = env_info.vector_observations[0] #* state 불러오기
+state_size = len(state) #* state size 구하기
+####################################
 total_scores = []
 scores = []
 batch_size = 64
@@ -30,26 +30,26 @@ gamma = 0.99
 alpha = 1e-4
 tua = 1e-3
 max_memory_size = 50000
-train = True
-
+train = True # True: 트레이닝 False: 모델 불러오기
+#################################### 하이퍼 파라미터들
 with tf.Session() as session:
-    brain_agent = DQNAgent(session, state_size, action_size, max_memory_size, gamma, alpha, tua)
+    brain_agent = DQNAgent(session, state_size, action_size, max_memory_size, gamma, alpha, tua) # DQN 알고리즘 
     session.run(tf.global_variables_initializer())
-    saver = tf.train.Saver()
+    saver = tf.train.Saver() # 모델 세이브 함수
     while mean < 13 and train:
-        env_info = env.reset(train_mode=True)[brain_name]
+        env_info = env.reset(train_mode=True)[brain_name] #* env reset으로 env_info 불러오기
         score = 0
         time_b = time.time()
         loss = 0
         for i in range(max_t):
             if np.random.random() > eps:
-                action = np.argmax(brain_agent.choose_action(state), axis=1)
+                action = np.argmax(brain_agent.choose_action(state), axis=1) 
             else:
                 action = np.random.choice(action_size)
-            env_info = env.step(action)[brain_name]
-            next_state = env_info.vector_observations[0]
-            reward = env_info.rewards[0]
-            done = env_info.local_done[0]
+            env_info = env.step(action)[brain_name] #* 환경에서 1step 진행하기
+            next_state = env_info.vector_observations[0] #* action후 환경으로부터 next state, reward, done 반환받기
+            reward = env_info.rewards[0] #* 반환받은 reward
+            done = env_info.local_done[0] #* 반환받은 done
             score += reward
             brain_agent.store(state, action, reward, next_state, [done])
             state = next_state
@@ -80,16 +80,16 @@ with tf.Session() as session:
     saver.restore(session, path)
     for _ in range(10):
         done = False
-        env_info = env.reset(train_mode=False)[brain_name]
+        env_info = env.reset(train_mode=False)[brain_name] #* env reset으로 env_info 불러오기
         score = 0
-        state = env_info.vector_observations[0]
+        state = env_info.vector_observations[0] #* state 불러오기
         while not done:
 
             action = brain_agent.action = np.argmax(brain_agent.choose_action(state), axis=1)
-            env_info = env.step(action)[brain_name]
-            next_state = env_info.vector_observations[0]
-            reward = env_info.rewards[0]
-            done = env_info.local_done[0]
+            env_info = env.step(action)[brain_name] #* 환경에서 1step 진행하기
+            next_state = env_info.vector_observations[0] #* action후 환경으로부터 next state, reward, done 반환받기
+            reward = env_info.rewards[0] #* 반환받은 reward
+            done = env_info.local_done[0] #* 반환받은 done
             score += reward
             state = next_state
         print("Score is ", score)
