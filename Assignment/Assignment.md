@@ -10,13 +10,13 @@
 
 이제 어덯게 짜야할지 궁금하면 banana/dqn_agent.py를 열어서 확인하면 dqn를 사용한 예를 볼수있습니다.(주석중에 *가 있는것은 꼭필요한 것들입니다.)
 
-<img src="../images/asg_1.jpg">
+<img src="../docs/images/asg_1.jpg">
 
 만약 환경이 실행되면 아래와 위 그림과 같이 터미널에 환경에 대한 정보가 나오는데 
 
 딥러닝 모델을 만들때 Action과 state의 Space size를 잘고려해서 만들어야 합니다.
 
-<img src="../images/RL_wiki_1.jpg">
+<img src="../docs/images/RL_wiki_1.jpg">
 
 위 그림을 보고 Action space type을 잘고려해서 알고리즘을 고르시길 바랍니다.
 
